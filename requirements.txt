@@ -1,1 +1,9 @@
-gunicorn 
+flask
+flask-pymongo
+flask-ckeditor
+werkzeug
+python-dotenv
+gunicorn
+pymongo
+bson
+flask-wtf
