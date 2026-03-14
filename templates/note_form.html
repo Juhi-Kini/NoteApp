@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h2>{{ 'Edit Note' if note else 'Create New Note' }}</h2>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title" name="title" 
+                     placeholder="Enter note title" value="{{ note['title'] if note else '' }}" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="content" class="form-label">Content</label>
+              <textarea class="form-control" id="content" name="content" rows="10">{{ note['content'] if note else '' }}</textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="tags" class="form-label">Tags</label>
+              <input type="text" class="form-control" id="tags" name="tags" 
+                     placeholder="Enter tags separated by commas (e.g., work, personal, idea)" 
+                     value="{{ note['tags']|join(', ') if note else '' }}">
+              <div class="form-text">Separate tags with commas</div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+              <button type="submit" class="btn btn-primary">{{ 'Update Note' if note else 'Create Note' }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Load CKEditor without CSRF -->
+{{ ckeditor.load() }}
+<script>
+  CKEDITOR.replace('content', {
+    height: 400,
+    removePlugins: 'forms'  // This disables form-related features that need CSRF
+  });
+</script>
+
+<style>
+  .cke_chrome {
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+  }
+  .cke_inner {
+    border-radius: 0.25rem !important;
+  }
+  .cke_top {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+    background: #f8f9fa !important;
+    border-bottom: 1px solid #dee2e6 !important;
+  }
+</style>
+{% endblock %}

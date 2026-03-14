@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ note['title'] }}</h2>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ note['content'] }}</p>
+      {% if note['tags'] %}
+      <p class="text-muted">Tags: {{ note['tags']|join(', ') }}</p>
+      {% endif %}
+      <p class="text-muted">Created: {{ note['created_at'] }}</p>
+      <p class="text-muted">Last updated: {{ note['updated_at'] }}</p>
+    </div>
+    <div class="card-footer">
+      <a href="/note/{{ note['_id'] }}/edit" class="btn btn-warning">Edit</a>
+      <form action="/note/{{ note['_id'] }}/delete" method="POST" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
