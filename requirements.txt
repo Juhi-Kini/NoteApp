@@ -5,5 +5,4 @@ werkzeug
 python-dotenv
 gunicorn
 pymongo
-bson
 flask-wtf
