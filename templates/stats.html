@@ -1,133 +1,118 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>📊 Note Statistics</h2>
-    <a href="/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+<div class="container mt-2 mt-md-4">
+  <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3">
+    <h2 class="h3 mb-2 mb-sm-0">📊 Note Statistics</h2>
+    <a href="/dashboard" class="btn btn-secondary btn-sm">← Back</a>
   </div>
 
   {% if not has_notes %}
     <div class="text-center py-5">
-      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-bar-chart-steps text-muted mb-3" viewBox="0 0 16 16">
-        <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0z"/>
-        <path d="M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5v-1zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1z"/>
-      </svg>
-      <h3 class="text-muted mt-3">No notes yet</h3>
+      <div class="display-1 text-muted mb-3">📊</div>
+      <h3 class="h4 text-muted">No notes yet</h3>
       <p class="text-muted">Create some notes to see statistics!</p>
-      <a href="/note/new" class="btn btn-primary">Create Your First Note</a>
+      <a href="/note/new" class="btn btn-primary">Create First Note</a>
     </div>
   {% else %}
     
-    <!-- Summary Cards -->
-    <div class="row mb-4">
-      <div class="col-md-3 mb-3">
+    <!-- Summary Cards - Stack on mobile -->
+    <div class="row g-2 g-md-3 mb-4">
+      <div class="col-6 col-md-3">
         <div class="card text-white bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Total Notes</h5>
-            <h2 class="display-4">{{ stats.total_notes }}</h2>
+          <div class="card-body py-2 py-md-3">
+            <h6 class="card-title small mb-1">Total Notes</h6>
+            <h3 class="mb-0">{{ stats.total_notes }}</h3>
           </div>
         </div>
       </div>
-      
-      <div class="col-md-3 mb-3">
+      <div class="col-6 col-md-3">
         <div class="card text-white bg-success">
-          <div class="card-body">
-            <h5 class="card-title">Total Words</h5>
-            <h2 class="display-4">{{ stats.total_words }}</h2>
+          <div class="card-body py-2 py-md-3">
+            <h6 class="card-title small mb-1">Total Words</h6>
+            <h3 class="mb-0">{{ stats.total_words }}</h3>
           </div>
         </div>
       </div>
-      
-      <div class="col-md-3 mb-3">
+      <div class="col-6 col-md-3">
         <div class="card text-white bg-info">
-          <div class="card-body">
-            <h5 class="card-title">Avg Words/Note</h5>
-            <h2 class="display-4">{{ stats.avg_words }}</h2>
+          <div class="card-body py-2 py-md-3">
+            <h6 class="card-title small mb-1">Avg Words</h6>
+            <h3 class="mb-0">{{ stats.avg_words }}</h3>
           </div>
         </div>
       </div>
-      
-      <div class="col-md-3 mb-3">
+      <div class="col-6 col-md-3">
         <div class="card text-white bg-warning">
-          <div class="card-body">
-            <h5 class="card-title">Total Tags</h5>
-            <h2 class="display-4">{{ stats.tag_count }}</h2>
+          <div class="card-body py-2 py-md-3">
+            <h6 class="card-title small mb-1">Total Tags</h6>
+            <h3 class="mb-0">{{ stats.tag_count }}</h3>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Two Column Layout -->
-    <div class="row">
+    <!-- Two Column Layout - Stack on mobile -->
+    <div class="row g-3">
       <!-- Left Column -->
-      <div class="col-md-6">
-        <!-- Most Used Tags -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5>🏷️ Most Used Tags</h5>
+      <div class="col-12 col-md-6">
+        <div class="card mb-3">
+          <div class="card-header bg-white py-2">
+            <h5 class="h6 mb-0">🏷️ Most Used Tags</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body p-2">
             {% if stats.most_common_tags %}
-              <div class="list-group">
-                {% for tag, count in stats.most_common_tags %}
-                  <div class="list-group-item d-flex justify-content-between align-items-center">
-                    <span class="badge bg-info text-dark p-2">{{ tag }}</span>
-                    <span class="badge bg-primary rounded-pill">{{ count }} notes</span>
-                  </div>
-                {% endfor %}
-              </div>
+              {% for tag, count in stats.most_common_tags %}
+                <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                  <span class="badge bg-info text-dark p-2">{{ tag }}</span>
+                  <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                </div>
+              {% endfor %}
             {% else %}
-              <p class="text-muted">No tags used yet</p>
+              <p class="text-muted small mb-0 p-2">No tags used yet</p>
             {% endif %}
           </div>
         </div>
 
-        <!-- Writing Streak -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5>🔥 Writing Activity</h5>
+        <div class="card mb-3">
+          <div class="card-header bg-white py-2">
+            <h5 class="h6 mb-0">🔥 Writing Activity</h5>
           </div>
           <div class="card-body">
-            <p><strong>Status:</strong> {{ stats.streak }}</p>
-            <p><strong>Busiest day:</strong> {{ stats.busiest_day }} ({{ stats.busiest_day_count }} notes)</p>
+            <p class="mb-1 small"><strong>Status:</strong> {{ stats.streak }}</p>
+            <p class="mb-0 small"><strong>Busiest day:</strong> {{ stats.busiest_day }} ({{ stats.busiest_day_count }} notes)</p>
           </div>
         </div>
       </div>
 
       <!-- Right Column -->
-      <div class="col-md-6">
-        <!-- Note Extremes -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5>📏 Note Extremes</h5>
+      <div class="col-12 col-md-6">
+        <div class="card mb-3">
+          <div class="card-header bg-white py-2">
+            <h5 class="h6 mb-0">📏 Note Extremes</h5>
           </div>
           <div class="card-body">
             {% if stats.longest_note %}
-              <div class="mb-3">
-                <h6>Longest Note:</h6>
-                <p><strong>{{ stats.longest_note.title }}</strong></p>
+              <div class="mb-2">
+                <small><strong>Longest:</strong> {{ stats.longest_note.title }}</small>
               </div>
             {% endif %}
-            
             {% if stats.shortest_note %}
               <div>
-                <h6>Shortest Note:</h6>
-                <p><strong>{{ stats.shortest_note.title }}</strong></p>
+                <small><strong>Shortest:</strong> {{ stats.shortest_note.title }}</small>
               </div>
             {% endif %}
           </div>
         </div>
 
-        <!-- Monthly Activity -->
-        <div class="card mb-4">
-          <div class="card-header">
-            <h5>📅 Notes by Month</h5>
+        <div class="card mb-3">
+          <div class="card-header bg-white py-2">
+            <h5 class="h6 mb-0">📅 Monthly Activity</h5>
           </div>
-          <div class="card-body">
-            <ul class="list-group">
+          <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
               {% for month, count in stats.months.items() %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
                   {{ month }}
                   <span class="badge bg-primary rounded-pill">{{ count }}</span>
                 </li>
@@ -138,40 +123,24 @@
       </div>
     </div>
 
-    <!-- Fun Facts Section -->
-    <div class="card mt-2">
-      <div class="card-header bg-secondary text-white">
-        <h5>✨ Fun Facts</h5>
+    <!-- Fun Facts - Mobile friendly -->
+    <div class="card mt-3">
+      <div class="card-header bg-secondary text-white py-2">
+        <h5 class="h6 mb-0">✨ Fun Facts</h5>
       </div>
       <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <p>📝 You've written approximately <strong>{{ stats.total_words * 5 }}</strong> characters</p>
-            <p>📖 That's like writing a <strong>{{ (stats.total_words / 50000)|round(1) }}</strong> page book</p>
+        <div class="row g-2">
+          <div class="col-12 col-sm-6">
+            <p class="small mb-1">📝 {{ stats.total_words * 5 }} characters</p>
+            <p class="small mb-1">📖 {{ (stats.total_words / 50000)|round(1) }} page book</p>
           </div>
-          <div class="col-md-6">
-            <p>⏱️ At 20 words/minute, you spent <strong>{{ (stats.total_words / 20 / 60)|round(1) }}</strong> hours writing</p>
-            <p>☕ That's about <strong>{{ (stats.total_words / 20 / 60 / 0.5)|round }}</strong> cups of coffee</p>
+          <div class="col-12 col-sm-6">
+            <p class="small mb-1">⏱️ {{ (stats.total_words / 20 / 60)|round(1) }} hours writing</p>
+            <p class="small mb-0">☕ {{ (stats.total_words / 20 / 60 / 0.5)|round }} cups of coffee</p>
           </div>
         </div>
       </div>
     </div>
   {% endif %}
 </div>
-
-<style>
-  .card {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
-  }
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  }
-  .display-4 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.2;
-  }
-</style>
 {% endblock %}
