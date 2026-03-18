@@ -18,7 +18,7 @@
             
             <div class="mb-3">
               <label for="content" class="form-label">Content</label>
-              <textarea class="form-control" id="content" name="content" rows="10">{{ note['content'] if note else '' }}</textarea>
+              <textarea class="form-control" name="content">{{ note['content']|safe if note else '' }}</textarea>
             </div>
             
             <div class="mb-3">
