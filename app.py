@@ -84,15 +84,28 @@ def dashboard():
     if "user_id" not in session:
         return redirect("/login")
     
-    # Get all notes for the current user, sorted by updated date (newest first)
-    notes = mongo.db.notes.find({"user_id": session["user_id"]}).sort("updated_at", -1)
+    # Get search query from URL
+    search_query = request.args.get('search', '').strip()
+    
+    # Build the query
+    query = {"user_id": session["user_id"]}
+    
+    if search_query:
+        # Search in title OR tags (case-insensitive)
+        query["$or"] = [
+            {"title": {"$regex": search_query, "$options": "i"}},
+            {"tags": {"$regex": search_query, "$options": "i"}}
+        ]
+    
+    # Get notes with search filter
+    notes = mongo.db.notes.find(query).sort("updated_at", -1)
     
     # Convert cursor to list and get count
     notes_list = list(notes)
     notes_count = len(notes_list)
     
-    return render_template("dashboard.html", notes=notes_list, notes_count=notes_count)
-
+    return render_template("dashboard.html", notes=notes_list, notes_count=notes_count, search_query=search_query)
+    
 @app.route("/note/new", methods=["GET", "POST"])
 def new_note():
     if "user_id" not in session:
